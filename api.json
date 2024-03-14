@@ -1,0 +1,21 @@
+{
+  "playlists": {
+   "titles": [
+    { "id": 1, "title": "Rap Life", "img": "drake_playlist.jpg", "link": "/drake-playlist" },
+    { "id": 2, "title": "Feeling Festive", "img": "feeling_festive.jpeg", "link": "/feeling-festive-playlist" },
+    { "id": 3, "title": "Puro Pop", "img": "puro_pop.webp", "link": "/puro-pop-playlist" }
+   ],
+   "drake": [
+    { "id": 1, "songTitle": "Started from the button", "img": "started_from_bottom.jpeg", "link": "/started_from_the_button" },
+    { "id": 2, "songTitle": "Landed", "img": "landed_drake.jpeg", "link": "/landed_drake" },
+    { "id": 3, "songTitle": "Passionfruit", "img": "passionfruit_drake.jpeg", "link": "/passionfruit_drake" }
+   ]
+  },
+  "comments": [
+    { "id": 1, "body": "some comment", "postId": 1 },
+    { "id": 2, "body": "some comment", "postId": 1 }
+  ],
+  "profile": {
+    "name": "Apple Music"
+  }
+}

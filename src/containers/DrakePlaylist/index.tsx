@@ -2,7 +2,7 @@
 "use client"; // This is a client component 👈🏽
 
 import React, { Fragment, lazy, Suspense } from "react";
-import useRequest from "./useRequest";
+import useRequest from "../DataFetch/useRequest";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,7 +10,7 @@ import Link from "next/link";
 const LazyPlayListContainer = lazy(
   () => import("../../components/PlayListMiniatures")
 );
-function DataFectch() {
+function DrakePlayList() {
   const { state } = useRequest(
     "https://my-json-server.typicode.com/androiderik/demo-fake-api/db"
   );
@@ -22,23 +22,23 @@ function DataFectch() {
     <>
       <Suspense fallback={<p>Loading...</p>}>
         <LazyPlayListContainer id="playlist">
-          {playlists?.titles?.map((item) => {
+          {playlists?.drake?.map((item) => {
             console.log(item.img, "itemm");
             return (
               <Fragment key={item.id}>
                 {item.img && (
                   <Link href={item.link}>
-                  <Image
-                    src={require(`../../../public/assets/PlaylistCovers/${item.img}`)}
-                    alt="applemusic"
-                    width="200"
-                    height="300"
-                    key={item.id}
-                    onError={() => myFunction()}
-                  />
+                    <Image
+                      src={require(`../../../public/assets/songCovers/${item.img}`)}
+                      alt="applemusic"
+                      width="200"
+                      height="300"
+                      key={item.id}
+                      onError={() => myFunction()}
+                    />
                   </Link>
                 )}
-                <p>{item.title}</p>
+                <p>{item.songTitle}</p>
               </Fragment>
             );
           })}
@@ -48,4 +48,4 @@ function DataFectch() {
   );
 }
 
-export default DataFectch;
+export default DrakePlayList;
