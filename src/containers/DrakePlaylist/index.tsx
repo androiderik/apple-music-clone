@@ -16,13 +16,13 @@ function DrakePlayList() {
   );
   const { playlists } = state.post;
   const myFunction = () => {
-    return <img src="" />;
+    return <Image  alt="applemusic" src="" />;
   };
   return (
     <>
       <Suspense fallback={<p>Loading...</p>}>
         <LazyPlayListContainer id="playlist">
-          {playlists?.drake?.map((item) => {
+          {playlists?.drake?.map((item: any) => {
             console.log(item.img, "itemm");
             return (
               <Fragment key={item.id}>

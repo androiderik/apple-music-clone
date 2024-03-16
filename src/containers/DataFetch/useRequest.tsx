@@ -3,7 +3,7 @@ import { useEffect, useReducer } from "react";
 import axios from "axios";
 import dataReducer, { FETCH_SUCCESS, FETCH_ERROR } from "./dataReducer";
 
-const useRequest = (url) => {
+const useRequest = (url : string) => {
   const [state, dispatch] = useReducer(dataReducer, {
     loading: true,
     error: "",
