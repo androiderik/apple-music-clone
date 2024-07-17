@@ -8,12 +8,11 @@ export default function Home() {
       <Link href="/browse">Listen Now</Link>
       <Link href="/browse">Browse</Link>
       <Link href="/browse">Radio</Link>
+      <Link href="/users">Users</Link>
+      <Link href="/login">Login</Link>
     </main>
   );
 }
-
-
-
 
 //Author: Erik Rodriguez
 // import { StrictMode } from "react";
