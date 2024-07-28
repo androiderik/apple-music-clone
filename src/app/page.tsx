@@ -1,38 +1,70 @@
+"use client"; // This is a client component 👈🏽
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faApple } from "@fortawesome/free-brands-svg-icons";
+import {
+  faMagnifyingGlass,
+  faHouse,
+  faBox,
+  faTowerBroadcast,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function Home() {
+  const [value, setValue] = useState("");
+
+  const onChange = (event) => {
+    setValue(event.target.value);
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Hello world </h1>
-      <Link href="/browse">Listen Now</Link>
-      <Link href="/browse">Browse</Link>
-      <Link href="/browse">Radio</Link>
+    <main className="flex min-h-screen flex-col items-start justify-between p-24">
+      <div id="flex-start">
+        <div className="left">
+          {" "}
+          <FontAwesomeIcon icon={faApple} /> Music
+        </div>
+      </div>
+
+      <div id="flex-start">
+        <div className="left">
+          {" "}
+          <FontAwesomeIcon icon={faMagnifyingGlass} />
+          <input
+            value={value}
+            onChange={onChange}
+            type="text"
+            name="Search"
+            placeholder="Search"
+          />
+        </div>
+      </div>
+      <div id="flex-start">
+        <div className="left">
+          {" "}
+          <Link href="/browse">
+            <FontAwesomeIcon icon={faHouse} /> Home
+          </Link>
+        </div>
+      </div>
+
+      <div id="flex-start">
+        <div className="left">
+          {" "}
+          <Link href="/browse">
+            <FontAwesomeIcon icon={faBox} /> Browse
+          </Link>
+        </div>
+      </div>
+      <div id="flex-start">
+        <div className="left">
+          {" "}
+          <Link href="/browse">
+            <FontAwesomeIcon icon={faTowerBroadcast} /> Radio
+          </Link>
+        </div>
+      </div>
     </main>
   );
 }
-
-
-
-
-//Author: Erik Rodriguez
-// import { StrictMode } from "react";
-// import { createRoot } from "react-dom/client";
-// import { BrowserRouter } from "react-router-dom";
-// import Navigation from "../components/Navigation";
-// import { LogoAppleMusic } from "../components/LogoAppleMusic";
-
-// import App from "./App";
-
-// const rootElement = document.getElementById("root")!;
-// const root = createRoot(rootElement);
-
-// root.render(
-//   <StrictMode>
-//     <BrowserRouter>
-//       <LogoAppleMusic />
-//       <App />
-//       <Navigation />
-//     </BrowserRouter>
-//   </StrictMode>,
-// );
