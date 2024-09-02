@@ -1,45 +1,49 @@
-//Author: Erik Rodriguez
-'use client'; // This is a client component 👈🏽
+"use client";
+import { useQuery } from "react-query";
+import getUsers from "./getUsers";
+import { Loader } from "../../components/Loader";
 
-import React from 'react';
-import Request from '../../SDK';
-import { useEffect } from 'react';
+export default function showUsers() {
+  const { data, isLoading, isError } = useQuery({
+    queryFn: async () => await getUsers(),
+    queryKey: ["users"], //Array according to Documentation
+  });
+
+  console.log(isError, "error")
 
 
-function Users() {
+  if (isLoading) {
+    return  <Loader />
+  };
 
-  useEffect(()=> {
-    async function fetchUsers() {
-      let response = await fetch('http://localhost:8080/users', {
-               method: 'GET',
-               headers: {
-                 "Content-Type": "application/json",
-                 "Access-Control-Allow-Origin": "*",
-               },
-               credentials: "include",
-             });
 
-             if (!response.ok) {
-               throw new Error(response.status);
-             }
+  if (isError) return <div>Sorry There was an Error</div>;
 
-             const json = await response.json();
+  return (
+    <div className="container mx-auto">
+      <h1 className="p-5 box-decoration-slice bg-gradient-to-r from-indigo-600 to-pink-500 text-white text-center font-bold text-4xl">
+        React Query Users
+      </h1>
+      <div className="grid grid-cols-4 gap-4 p-10">
+          {data?.map(
+            (item: { _id: number, username: string; email: string }) => {
+              return (
+                <div key={item._id}>
+                  <h1>Email: {item.email}</h1>
+                  <ul>
+                    <li>Username: {item.username}</li>
+                    <li>ID: {item._id}</li>
+                  </ul>
 
-          
-             return json;
-    }
-    fetchUsers();
+                </div>
 
-  }, [])
 
-//   const users= Request(
-//     'http://localhost:8080/users',
-//     'GET',
-//     null
-//   );
-//  console.log(users, 'state')
 
-  return null;
+
+              );
+            }
+          )}
+      </div>
+    </div>
+  );
 }
-
-export default Users;

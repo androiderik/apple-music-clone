@@ -1,5 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -8,10 +8,14 @@ export default function Home() {
       <Link href="/browse">Listen Now</Link>
       <Link href="/browse">Browse</Link>
       <Link href="/browse">Radio</Link>
+      <Link href="/contact-book">Contact book</Link>
+      <Link href="/tic-tac-toe">Tic tac toe</Link>
+
       <Link href="/users">Users</Link>
+      <Link href="/register-user">Register Users</Link>
       <Link href="/login">Login</Link>
     </main>
-  );
+  )
 }
 
 //Author: Erik Rodriguez
