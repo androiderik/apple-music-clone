@@ -10,9 +10,10 @@ export default function Home() {
       <Link href="/browse">Radio</Link>
       <Link href="/contact-book">Contact book</Link>
       <Link href="/tic-tac-toe">Tic tac toe</Link>
-
+      <Link href="/user-dashboard">User dashboard</Link>
       <Link href="/users">Users</Link>
       <Link href="/register-user">Register Users</Link>
+      <Link href="/inventory">Inventory</Link>
       <Link href="/login">Login</Link>
     </main>
   )

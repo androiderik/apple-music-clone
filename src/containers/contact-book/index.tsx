@@ -156,7 +156,7 @@ const InformationTable = (props: tableData) => {
           </tr>
         </thead>
         <tbody ref={ref}>
-          {props.tableData?.map((item: FormInfo, key: string) => {
+          {props.tableData.map((item: FormInfo, key: string) => {
             return (
               <tr key={key}>
                 <td className="tdtable">{item.name} </td>
@@ -172,7 +172,7 @@ const InformationTable = (props: tableData) => {
 }
 
 export const ContactBook = () => {
-  const [formP, setFormProps] = useState()
+  const [formP, setFormProps] = useState([])
   const dataFromForm = (formProps) => {
     setFormProps(formProps)
   }
