@@ -1,102 +1,101 @@
-//Author: Erik Rodriguez
-"use client"; // This is a client component 👈🏽
-import { useRouter } from "next/navigation"
-import { failStatusCodes } from "../../helpers/statusCodes";
+//Author: Erik Rodriguez 🤌
+'use client'; // This is a client component
+import { useRouter } from 'next/navigation'
+import { failStatusCodes } from '../../helpers/statusCodes';
+import { useMutation } from "react-query";
+import React from 'react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import './form.css';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { string } from 'yup';
+import { Loader } from '../../components/Loader';
+import { Input } from '../../components/Input';
+import axios from "axios";
 
-
-import React, { use } from "react";
-
-
-import Request from "../../SDK";
-import { useEffect, useState } from "react";
-import { RegisterUser } from "./Form";
-import { useForm } from "react-hook-form";
-import "./form.css";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { string } from "yup";
 
 const schema = yup
-  .object({
-    email: yup
-      .string()
-      .email("Invalid email address")
-      .required("Email is required!"),
-    password: string().required(),
-  })
-  .required();
-const UserLogin = () => {
-  const router = useRouter()
+	.object({
+		email: yup
+			.string()
+			.email('Invalid email address')
+			.required('Email is required!'),
+		password: string()
+			.required()
+			.min(8, 'Password length should be 8 chars minimum.')
+			.matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/, 'Password is invalid check requirements.'),
+
+	})
+	.required();
+const RegisterUser = () => {
+	const router = useRouter()
 
 
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+	const {
+		register,
+		formState: { errors },
+		handleSubmit,
+	} = useForm({
+		resolver: yupResolver(schema),
+	});
 
-  const [fetchedData, setFetchedData] = useState({});
-  const [userInfo, setUserInfo] = useState({});
-  const [statusCode, setStatusCode] = useState(0);
+	const [statusCode, setStatusCode] = useState(0);
 
-  useEffect(() => {
-    if (Object.keys(userInfo).length !== 0) {
-      async function fetchData(userInfo: yup.ObjectShape) {
-        const response = await fetch("http://localhost:8080/auth/login", {
-          method: "POST",
-          body: JSON.stringify(userInfo),
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-          credentials: "include", //in order to set cookies in browser if there are from the server
-        });
-        setStatusCode(response.status)
-        if (!response.ok) {
-          console.log(response.status, "response status")
-          //throw new Error(response.status);
+	const options : Object = {
+		headers: {
+			'Content-Type': 'application/json',
+			'Access-Control-Allow-Origin': '*',
+		},
+		withCredentials: true
+	};
 
-        } else {
-          if (response.status === Number(process.env.NEXT_PUBLIC_SUCCESS_LOGIN)) {
-            router.push('/browse')
-          }
-        }
+	const mutation = useMutation((newPost) => {
 
-        const responseData = await response.json();
+		return axios.post(process.env.NEXT_PUBLIC_SERVER + process.env.NEXT_PUBLIC_LOGIN_USER, newPost, options)
+			.then((response) => {
+				console.log(response, 'response');
+				//router.push('/browse')
+			}, (error) => {
+				setStatusCode(error.response?.status)
+			});
 
-        setFetchedData(responseData);
-      }
-      fetchData(userInfo);
+	}
+	);
+
+
+	const onSubmit = (userCredentials: yup.ObjectShape, e: any) => {
+		mutation.mutate(userCredentials);
+	};
+	console.log(mutation, '')
 
 
 
-    }
-  }, [userInfo]);
 
-  const onSubmit = (userCredentials: yup.ObjectShape, e: any) => {
-    e.preventDefault();
-    setUserInfo(userCredentials);
-  };
+	const failedStatusCode: boolean = failStatusCodes(statusCode);
+	return (
+		<>
+			{mutation.isError && <span>Error: {mutation.error.message}</span>}
+			{mutation.isLoading && <Loader />}
+			{mutation.isSuccess && <div>User created!</div> }
+
+			<p className='title'> User login</p>
+
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<Input register={register} name='email' placeholder='Email' type='email' />
+				<p>{errors.email?.message}</p>
+				<Input register={register} name='password' placeholder='Password' type='password' />
+				<p>{errors.password?.message}</p>
+				{failedStatusCode && (<p>Fallo al autenticar</p>)}
+				<input type='submit' value='Submit' />
+
+			</form>
 
 
-  const failedStatusCode = failStatusCodes(statusCode);
-  return (
-    <>
-      <p className="title"> User Registration</p>
-      <div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <input {...register("email")} />
-          <p>{errors.email?.message}</p>
-          <input {...register("password")} />
-          <p>{errors.password?.message}</p>
-          {failedStatusCode && (<p>Fallo al autenticar</p>)}
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
-    </>
-  );
+
+
+		</>
+	);
 };
 
-export default UserLogin;
+export default RegisterUser;

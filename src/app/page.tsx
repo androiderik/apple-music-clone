@@ -1,15 +1,5 @@
-"use client"; // This is a client component 👈🏽
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faApple } from "@fortawesome/free-brands-svg-icons";
-import {
-  faMagnifyingGlass,
-  faHouse,
-  faBox,
-  faTowerBroadcast,
-} from "@fortawesome/free-solid-svg-icons";
+import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home() {
   const [value, setValue] = useState("");
@@ -24,10 +14,15 @@ export default function Home() {
       <Link href="/browse">Listen Now</Link>
       <Link href="/browse">Browse</Link>
       <Link href="/browse">Radio</Link>
+      <Link href="/contact-book">Contact book</Link>
+      <Link href="/tic-tac-toe">Tic tac toe</Link>
+      <Link href="/user-dashboard">User dashboard</Link>
       <Link href="/users">Users</Link>
+      <Link href="/register-user">Register Users</Link>
+      <Link href="/inventory">Inventory</Link>
       <Link href="/login">Login</Link>
     </main>
-  );
+  )
 }
 
 //Author: Erik Rodriguez
