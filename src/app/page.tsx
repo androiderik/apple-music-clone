@@ -2,11 +2,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Home() {
-  const [value, setValue] = useState("");
 
-  const onChange = (event) => {
-    setValue(event.target.value);
-  };
+
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -14,6 +11,7 @@ export default function Home() {
       <Link href="/browse">Listen Now</Link>
       <Link href="/browse">Browse</Link>
       <Link href="/browse">Radio</Link>
+      <Link href="/highlight">Highlight boxes</Link>
       <Link href="/contact-book">Contact book</Link>
       <Link href="/tic-tac-toe">Tic tac toe</Link>
       <Link href="/user-dashboard">User dashboard</Link>
